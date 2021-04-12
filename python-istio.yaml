@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: python-gateway
+  namespace: python
 spec:
   selector:
     istio: ingressgateway
@@ -11,16 +12,17 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - "python-app.example.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: python-app
+  namespace: python
 spec:
   hosts:
-  - "*"
+  - "python-app.example.com"
   gateways:
   - python-gateway
   http:
