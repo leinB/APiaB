@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-env-configmap
+data:
+  ARGOCD_SERVER: argocd.example.com
+  ARGOCD_APPLICATION_NAME: pythonapp
+  ARGOCD_APPLICATION_REVISION: HEAD
