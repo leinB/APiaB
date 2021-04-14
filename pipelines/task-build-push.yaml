@@ -27,4 +27,4 @@ spec:
         - /kaniko/executor
         - --dockerfile=$(params.pathToContext)/$(params.pathToDockerFile)
         - --context=$(params.pathToContext)
-        - --destination=$(resources.outputs.image-registry.url)/baojingbo/tekton-test:latest
+        - --destination=/baojingbo/tekton-test:latest
