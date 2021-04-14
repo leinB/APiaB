@@ -6,8 +6,6 @@ spec:
   resources:
     - name: repo
       type: git
-    - name: image-registry
-      type: image
   tasks:
     - name: build-and-push
       taskRef:
@@ -21,6 +19,3 @@ spec:
         inputs:
           - name: repo
             resource: repo
-        outputs:
-          - name: image-registry
-            resource: image-registry
