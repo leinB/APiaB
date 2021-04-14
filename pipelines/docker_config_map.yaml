@@ -4,5 +4,5 @@ kind: ConfigMap
 metadata:
   name: build-task-configmap
 data:
-  DOCKER_TAG: "3.0"
+  DOCKER_TAG: "4.0"
   DOCKER_IMAGE_NAME: baojingbo/tekton-test
