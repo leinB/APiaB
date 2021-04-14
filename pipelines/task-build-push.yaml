@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-and-push
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+    outputs:
+      - name: image-registry
+        type: image
+  params:
+  - name: pathToDockerFile
+    description: Path to Dockerfile
+    default: Dockerfile
+  - name: pathToContext
+    description: The build context used by Kaniko
+    default: /workspace/repo/app
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v1.3.0
+      env:
+        - name: DOCKER_CONFIG
+          value: /tekton/home/.docker
+      command:
+        - /kaniko/executor
+        - --dockerfile=$(params.pathToContext)/$(params.pathToDockerFile)
+        - --context=$(params.pathToContext)
+        - --destination=$(resources.outputs.image-registry.url)/baojingbo/tekton-test:latest

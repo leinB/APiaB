@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: app-git-repo
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/IvoP1/argocd123.git
+    - name: revision
+      value: main

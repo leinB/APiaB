@@ -1,0 +1,10 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: dockerhub-registry
+spec:
+  params:
+    - name: url
+      value: 'https://index.docker.io/v1'
+  type: image
