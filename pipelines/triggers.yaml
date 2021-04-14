@@ -1,0 +1,46 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: tekton-argocd-example-build-tt
+spec:
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      generateName: tekton-argocd-example-build-deploy-pipeline-run-
+      namespace: tekton-pipelines
+    spec:
+      serviceAccountName: build-bot
+      pipelineRef:
+        name: test-build-push
+      resources:
+      - name: repo
+        resourceRef:
+          name: app-git-repo
+
+--- 
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: tekton-argocd-example-build-git-tb
+spec:
+  params:
+  - name: repo-url
+    value: $(body.repository.url)
+  - name: repo-revision
+    value: main
+
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: tekton-argocd-example-build-el
+spec:
+  serviceAccountName: tekton-triggers-admin
+  triggers:
+  - bindings:
+    - ref: tekton-argocd-example-build-git-tb
+    template:
+      name: tekton-argocd-example-build-tt
