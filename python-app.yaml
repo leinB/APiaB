@@ -34,6 +34,6 @@ spec:
     spec:
       containers:
         - name: python-app
-          image: baojingbo/tekton-test:5.0
+          image: baojingbo/tekton-test:7.0
           ports:
             - containerPort: 8000
