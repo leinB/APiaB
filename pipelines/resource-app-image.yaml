@@ -7,4 +7,4 @@ spec:
   type: image
   params:
     - name: url
-      value: baojingbo/tekton-test:7.0 #This defines the name of output image
+      value: baojingbo/tekton-test:8.0 #This defines the name of output image
