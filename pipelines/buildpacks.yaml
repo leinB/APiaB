@@ -1,14 +1,3 @@
-
-apiVersion: tekton.dev/v1alpha1
-kind: PipelineResource
-metadata:
-  name: buildpacks-app-image 
-spec:
-  type: image
-  params:
-    - name: url
-      value: baojingbo/tekton-test:7.0 #This defines the name of output image
-
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -53,8 +42,8 @@ spec:
       outputs:
       - name: image
         resource: build-image
-    - name: sync-application
-      taskRef:
-        name: argocd-task-sync-and-wait
-      runAfter:
-        - buildpacks
+  - name: sync-application
+    taskRef:
+      name: argocd-task-sync-and-wait
+    runAfter:
+      - buildpacks
