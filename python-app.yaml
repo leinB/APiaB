@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: python-app
-  namespace: python
+  namespace: python-demo
   labels:
     app: python-app
 spec:
@@ -18,7 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-app
-  namespace: python
+  namespace: python-demo
   labels:
     version: v1
 spec:
@@ -36,4 +36,4 @@ spec:
         - name: python-app
           image: baojingbo/tekton-test:9.0
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
