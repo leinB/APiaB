@@ -1,31 +1,70 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: acme-crt
+  namespace: python-demo
+spec:
+  secretName: python-crt-secret
+  dnsNames:
+  - pythonapp.cxcto.cisco.com
+  issuerRef:
+    name: acme-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+
+---
+apiVersion: istio.banzaicloud.io/v1beta1
+kind: MeshGateway
+metadata:
+  name: python-ingress
+  namespace: python-demo
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+  ports:
+  - name: http
+    port: 8001
+    protocol: TCP
+    targetPort: 8001
+  serviceType: LoadBalancer
+  type: ingress
+
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: python-gateway
-  namespace: python
+  namespace: python-demo
 spec:
   selector:
-    istio: ingressgateway
+    gateway-name: python-ingress
+    gateway-type: ingress
   servers:
   - port:
-      number: 80
+      number: 8001
       name: http
-      protocol: HTTP
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: python-crt-secret
     hosts:
-    - "python-app.example.com"
+    - "pythonapp.cxcto.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: python-app
-  namespace: python
+  name: python-server
+  namespace: python-demo
 spec:
   hosts:
-  - "python-app.example.com"
+  - "pythonapp.cxcto.cisco.com"
   gateways:
   - python-gateway
   http:
   - route:
     - destination:
-        host: python-app
+        port:
+          number: 8080
+        host: python-app.python-demo.svc.cluster.local
