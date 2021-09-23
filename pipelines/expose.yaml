@@ -1,31 +1,36 @@
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: triggers-gateway
-  namespace: tekton-pipelines
+  name: trigger-gateway
+  namespace: python-demo
 spec:
   selector:
-    istio: ingressgateway
+    gateway-name: python-ingress
+    gateway-type: ingress
   servers:
   - port:
-      number: 80
+      number: 8002
       name: http
-      protocol: HTTP
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: python-crt-secret
     hosts:
-    - "*"
+    - "pythonapp.cxcto.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: triggers-app
-  namespace: tekton-pipelines
+  name: python-server
+  namespace: python-demo
 spec:
   hosts:
-  - "*"
+  - "pythonapp.cxcto.cisco.com"
   gateways:
-  - triggers-gateway
+  - trigger-gateway
   http:
   - route:
     - destination:
-        host: el-tekton-argocd-example-build-el
+        host: el-tekton-argocd-example-build-el.tekton-pipelines.svc.cluster.local
