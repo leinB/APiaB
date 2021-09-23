@@ -50,6 +50,15 @@ spec:
       credentialName: python-crt-secret
     hosts:
     - "pythonapp.cxcto.cisco.com"
+  - port:
+      number: 8002
+      name: http
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: python-crt-secret
+    hosts:
+    - "pythonapp.cxcto.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
