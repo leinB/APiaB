@@ -8,4 +8,4 @@ spec:
   type: image
   params:
     - name: url
-      value: 842793852320.dkr.ecr.us-east-1.amazonaws.com/pythonapp #This defines the name of output image
+      value: baojingbo/tekton-test:17.0 #This defines the name of output image
