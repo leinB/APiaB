@@ -1,7 +1,7 @@
 from flask import Flask
 
 PORT = 8080
-MESSAGE = "Hello buildpack123\n"
+MESSAGE = "Hello buildpack12\n"
 
 app = Flask(__name__)
 
