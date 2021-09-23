@@ -27,6 +27,10 @@ spec:
     port: 8001
     protocol: TCP
     targetPort: 8001
+  - name: http
+    port: 8002
+    protocol: TCP
+    targetPort: 8002
   serviceType: LoadBalancer
   type: ingress
 
@@ -43,15 +47,6 @@ spec:
   servers:
   - port:
       number: 8001
-      name: http
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: python-crt-secret
-    hosts:
-    - "pythonapp.cxcto.cisco.com"
-  - port:
-      number: 8002
       name: http
       protocol: HTTPS
     tls:
