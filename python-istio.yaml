@@ -27,7 +27,7 @@ spec:
     port: 8001
     protocol: TCP
     targetPort: 8001
-  - name: http
+  - name: http2
     port: 8002
     protocol: TCP
     targetPort: 8002
