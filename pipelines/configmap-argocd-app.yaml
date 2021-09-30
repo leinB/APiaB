@@ -4,5 +4,3 @@ metadata:
   name: argocd-env-configmap
 data:
   ARGOCD_SERVER: argocd.cxcto.cisco.com:8000
-  ARGOCD_APPLICATION_NAME: pythonapp
-  ARGOCD_APPLICATION_REVISION: HEAD
