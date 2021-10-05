@@ -47,3 +47,8 @@ spec:
       name: argocd-task-sync-and-wait
     runAfter:
       - buildpacks
+    params:
+      - name: application-name
+        value: 'pythonapp'
+      - name: revision
+        value: 'HEAD'
