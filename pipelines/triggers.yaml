@@ -13,7 +13,7 @@ spec:
     spec:
       serviceAccountName: build-bot
       params:
-        - name: url
+      - name: url
         value: $(tt.params.repo-url)
       pipelineRef:
         name: buildpacks-test-pipeline
