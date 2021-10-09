@@ -1,12 +1,44 @@
 ---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: acme-crt
+  namespace: tekton-pipelines
+spec:
+  secretName: tekton-crt-secret
+  dnsNames:
+  - tektontrigger.cxcto.cisco.com
+  issuerRef:
+    name: acme-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+
+---
+apiVersion: istio.banzaicloud.io/v1beta1
+kind: MeshGateway
+metadata:
+  name: trigger-ingress
+  namespace: tekton-pipelines
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+  ports:
+  - name: http2
+    port: 8002
+    protocol: TCP
+    targetPort: 8002
+  serviceType: LoadBalancer
+  type: ingress
+
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: trigger-gateway
-  namespace: python-demo
+  namespace:  tekton-pipelines
 spec:
   selector:
-    gateway-name: python-ingress
+    gateway-name: trigger-ingress
     gateway-type: ingress
   servers:
   - port:
@@ -15,19 +47,19 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: python-crt-secret
+      credentialName: tekton-crt-secret
     hosts:
-    - "pythonapp.cxcto.cisco.com"
+    - "tektontrigger.cxcto.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: trigger-server
-  namespace: python-demo
+  namespace: tekton-pipelines
 spec:
   hosts:
-  - "pythonapp.cxcto.cisco.com"
+  - "tektontrigger.cxcto.cisco.com"
   gateways:
   - trigger-gateway
   http:
