@@ -5,8 +5,8 @@ metadata:
   name: buildpacks-test-pipeline
 spec:
   params:
-    - name: url
-      type: string
+  - name: url
+    type: string
   workspaces:
   - name: shared-workspace
   resources:
