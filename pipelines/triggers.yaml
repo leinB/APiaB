@@ -4,6 +4,9 @@ kind: TriggerTemplate
 metadata:
   name: tekton-argocd-example-build-tt
 spec:
+  params:
+  - name: repo-url
+    description: The git url
   resourcetemplates:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
