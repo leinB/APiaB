@@ -4,6 +4,9 @@ kind: Pipeline
 metadata:
   name: buildpacks-test-pipeline
 spec:
+  params:
+    - name: url
+      type: string
   workspaces:
   - name: shared-workspace
   resources:
@@ -18,7 +21,7 @@ spec:
       workspace: shared-workspace
     params:
     - name: url
-      value: https://github.com/IvoP1/argocd123
+      value: "$(params.url)"
     - name: subdirectory
       value: ""
     - name: deleteExisting
