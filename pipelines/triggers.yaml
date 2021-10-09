@@ -1,3 +1,4 @@
+---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
@@ -11,6 +12,9 @@ spec:
       namespace: tekton-pipelines
     spec:
       serviceAccountName: build-bot
+      params:
+        - name: url
+        value: $(tt.params.repo-url)
       pipelineRef:
         name: buildpacks-test-pipeline
       workspaces:
@@ -28,7 +32,6 @@ spec:
             claimName: buildpacks-cache-pvc
 
 --- 
-
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
@@ -36,12 +39,11 @@ metadata:
 spec:
   params:
   - name: repo-url
-    value: $(body.repository.url)
-  - name: repo-revision
-    value: main
+    value: $(body.repository)
+  - name: repo-name
+    value: $(body.name)
 
 ---
-
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
