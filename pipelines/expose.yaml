@@ -24,7 +24,7 @@ spec:
   minReplicas: 1
   ports:
   - name: http2
-    port: 8002
+    port: 443
     protocol: TCP
     targetPort: 8002
   serviceType: LoadBalancer
