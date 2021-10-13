@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: argocd-env-configmap
 data:
-  ARGOCD_SERVER: argocd.cxcto.cisco.com:8000
+  ARGOCD_SERVER: argocd.cxcto.cisco.com
