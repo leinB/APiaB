@@ -1,5 +1,5 @@
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: acme-crt
@@ -12,26 +12,33 @@ spec:
     name: acme-issuer
     kind: ClusterIssuer
     group: cert-manager.io
-
+  
 ---
-apiVersion: istio.banzaicloud.io/v1beta1
-kind: MeshGateway
+apiVersion: servicemesh.cisco.com/v1alpha1
+kind: IstioMeshGateway
 metadata:
   name: python-ingress
   namespace: python-demo
 spec:
-  maxReplicas: 1
-  minReplicas: 1
-  ports:
-  - name: http
-    port: 8001
-    protocol: TCP
-    targetPort: 8001
-  - name: http2
-    port: 8002
-    protocol: TCP
-    targetPort: 8002
-  serviceType: LoadBalancer
+  deployment:
+    metadata:
+      labels:
+        gateway-name: argo-ingress
+        gateway-type: ingress
+    replicas:
+      count: 1
+      min: 1
+      max: 1
+  service:
+    ports:
+    - name: http
+      port: 443
+      protocol: TCP
+      targetPort: 8000
+    type: LoadBalancer
+  istioControlPlane:
+    name: cp-v111x
+    namespace: istio-system 
   type: ingress
 
 ---
