@@ -23,7 +23,7 @@ spec:
   deployment:
     metadata:
       labels:
-        gateway-name: argo-ingress
+        gateway-name: testapp-ingress
         gateway-type: ingress
     replicas:
       count: 1
