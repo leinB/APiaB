@@ -3,11 +3,11 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: acme-crt
-  namespace: python-demo
+  namespace: test-app
 spec:
-  secretName: python-crt-secret
+  secretName: testapp-crt-secret
   dnsNames:
-  - pythonapp.-staging.cisco.com
+  - testapp.cxcto-staging.cisco.com
   issuerRef:
     name: acme-issuer
     kind: ClusterIssuer
@@ -17,8 +17,8 @@ spec:
 apiVersion: servicemesh.cisco.com/v1alpha1
 kind: IstioMeshGateway
 metadata:
-  name: python-ingress
-  namespace: python-demo
+  name: testapp-ingress
+  namespace: test-app
 spec:
   deployment:
     metadata:
@@ -45,11 +45,11 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: python-gateway
-  namespace: python-demo
+  name: testapp-gateway
+  namespace: test-app
 spec:
   selector:
-    gateway-name: python-ingress
+    gateway-name: testapp-ingress
     gateway-type: ingress
   servers:
   - port:
@@ -58,24 +58,24 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: python-crt-secret
+      credentialName: testapp-crt-secret
     hosts:
-    - "pythonapp.cxcto-staging.cisco.com"
+    - "testapp.cxcto-staging.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: python-server
-  namespace: python-demo
+  name: testapp-server
+  namespace: test-app
 spec:
   hosts:
-  - "pythonapp.cxcto-staging.cisco.com"
+  - "testapp.cxcto-staging.cisco.com"
   gateways:
-  - python-gateway
+  - testapp-gateway
   http:
   - route:
     - destination:
         port:
           number: 8080
-        host: python-app.python-demo.svc.cluster.local
+        host: test-app.test-app.svc.cluster.local

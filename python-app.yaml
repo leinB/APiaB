@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: python-app
-  namespace: python-demo
+  name: test-app
+  namespace: test-app
   labels:
-    app: python-app
+    app: test-app
 spec:
   selector:
-    app: python-app
+    app: test-app
   ports:
     - name: http
       port: 8080
@@ -17,23 +17,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-app
-  namespace: python-demo
+  name: test-app
+  namespace: test-app
   labels:
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python-app
+      app: test-app
   template:
     metadata:
       labels:
-        app: python-app
+        app: test-app
         version: v1
     spec:
       containers:
-        - name: python-app
+        - name: test-app
           image: baojingbo/tekton-test:23.0
           ports:
             - containerPort: 8080
