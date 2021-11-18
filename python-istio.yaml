@@ -7,7 +7,7 @@ metadata:
 spec:
   secretName: python-crt-secret
   dnsNames:
-  - pythonapp.cxcto.cisco.com
+  - pythonapp.-staging.cisco.com
   issuerRef:
     name: acme-issuer
     kind: ClusterIssuer
@@ -60,7 +60,7 @@ spec:
       mode: SIMPLE
       credentialName: python-crt-secret
     hosts:
-    - "pythonapp.cxcto.cisco.com"
+    - "pythonapp.cxcto-staging.cisco.com"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -70,7 +70,7 @@ metadata:
   namespace: python-demo
 spec:
   hosts:
-  - "pythonapp.cxcto.cisco.com"
+  - "pythonapp.cxcto-staging.cisco.com"
   gateways:
   - python-gateway
   http:
