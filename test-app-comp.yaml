@@ -32,9 +32,13 @@ spec:
   service:
     ports:
     - name: http
-      port: 443
+      port: 8001
       protocol: TCP
-      targetPort: 8000
+      targetPort: 8001
+    - name: http2
+      port: 8002
+      protocol: TCP
+      targetPort: 8002
     type: LoadBalancer
   istioControlPlane:
     name: cp-v111x
