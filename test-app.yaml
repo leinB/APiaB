@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: test-app:latest
+          image: lbashour/test-app:latest
           imagePullPolicy: Always          
           ports:
             - containerPort: 8080
