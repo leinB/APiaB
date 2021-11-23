@@ -32,9 +32,9 @@ spec:
   service:
     ports:
     - name: http
-      port: 443
+      port: 8001
       protocol: TCP
-      targetPort: 8000
+      targetPort: 8001
     type: LoadBalancer
   istioControlPlane:
     name: cp-v111x
@@ -53,7 +53,7 @@ spec:
     gateway-type: ingress
   servers:
   - port:
-      number: 8000
+      number: 8001
       name: http
       protocol: HTTPS
     tls:
@@ -77,5 +77,5 @@ spec:
   - route:
     - destination:
         port:
-          number: 80
+          number: 8080
         host: test-app.test-app.svc.cluster.local
